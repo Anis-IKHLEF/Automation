@@ -1,0 +1,862 @@
+{
+  "name": "Client Request Intake - Auto Triage & Status Update",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "p1",
+              "name": "Priority",
+              "value": "Prior",
+              "type": "string"
+            },
+            {
+              "id": "p2",
+              "name": "AlertSubject",
+              "value": "🔥 PRIORITY CLIENT - Budget +2000$",
+              "type": "string"
+            },
+            {
+              "id": "p3",
+              "name": "AlertIntro",
+              "value": "⭐ PRIORITY CLIENT ⭐\n\nA high-value client just submitted a request!\n\n⚡ Contact them NOW!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        3664
+      ],
+      "id": "6795381e-baad-4f08-ab70-8b66c18a1c9a",
+      "name": "⭐ Set Priority = Prior"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "p1",
+              "name": "Priority",
+              "value": "Other",
+              "type": "string"
+            },
+            {
+              "id": "p2",
+              "name": "AlertSubject",
+              "value": "📩 New Client Request - {{ $('Edit Fields1').item.json.Budget }}",
+              "type": "string"
+            },
+            {
+              "id": "p3",
+              "name": "AlertIntro",
+              "value": "A new client has submitted a request.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        4048
+      ],
+      "id": "0f48d2a4-534b-49bb-a010-8463a5b0dd79",
+      "name": "📋 Set Priority = Other"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appcFOvy3ENPSDfXQ",
+          "mode": "list",
+          "cachedResultName": "Client alerte",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblstqAAIVqeHosfU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ/tblstqAAIVqeHosfU"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "First Name": "={{ $('Edit Fields').item.json['First Name'] }}",
+            "Last Name": "={{ $('Edit Fields').item.json['Last Name'] }}",
+            "Email": "={{ $('Edit Fields').item.json.Email }}",
+            "Phone": "={{ $('Edit Fields').item.json.Phone }}",
+            "Budget": "={{ $('Edit Fields').item.json.Budget }}",
+            "Priority": "={{ $json.Priority }}",
+            "Service": "={{ $('Edit Fields').item.json.Service }}",
+            "Submission Date": "={{ $('Edit Fields').item.json['Submission Date'] }}",
+            "Statut": "Pending"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "500$",
+                  "value": "500$"
+                },
+                {
+                  "name": "1000$",
+                  "value": "1000$"
+                },
+                {
+                  "name": "1500$",
+                  "value": "1500$"
+                },
+                {
+                  "name": "+2000$",
+                  "value": "+2000$"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "",
+                  "value": ""
+                },
+                {
+                  "name": "Prior",
+                  "value": "Prior"
+                },
+                {
+                  "name": "Other",
+                  "value": "Other"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Service",
+              "displayName": "Service",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Web developpement",
+                  "value": "Web developpement"
+                },
+                {
+                  "name": "Mobile developpement",
+                  "value": "Mobile developpement"
+                },
+                {
+                  "name": "Data and AI",
+                  "value": "Data and AI"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Submission Date",
+              "displayName": "Submission Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Statut",
+              "displayName": "Statut",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "Contacted",
+                  "value": "Contacted"
+                },
+                {
+                  "name": "In Progress",
+                  "value": "In Progress"
+                },
+                {
+                  "name": "Closed",
+                  "value": "Closed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " checkbox",
+              "displayName": " checkbox",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        3856
+      ],
+      "id": "5e91c2fa-df0f-495a-8425-250a342133ab",
+      "name": "🗃️ Airtable - Save Client",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "zRGEmSJpOfcr91ps",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "aniceikhlef10@gmail.com",
+        "subject": "={{ $('⭐ Set Priority = Prior').item.json.AlertSubject ?? $('📋 Set Priority = Other').item.json.AlertSubject }}",
+        "message": "=<p>{{ $('⭐ Set Priority = Prior').item.json.AlertIntro ?? $('📋 Set Priority = Other').item.json.AlertIntro }}</p>\n\n<hr>\n\n<p>\n👤 <b>Name</b>     : {{ $json.fields['First Name'] }} {{ $json.fields['Last Name'] }}<br>\n📧 <b>Email</b>    : {{ $json.fields.Email }}<br>\n📞 <b>Phone</b>    : {{ $json.fields.Phone }}<br>\n🛠️ <b>Service</b>  : {{ $json.fields.Service }}<br>\n💰 <b>Budget</b>  {{ $json.fields.Budget }} : <br>\n📅 <b>Date</b>     : {{ $json.fields['Submission Date'] }}<br>\n🎯 <b>Priority</b> : {{ $('⭐ Set Priority = Prior').item.json.Priority }}\n</p>\n\n<hr>\n\n<p>⚡ Contact them as soon as possible!</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        4128
+      ],
+      "id": "25f93ce2-4c9d-4df1-a847-4f6899299ce8",
+      "name": "🔔 Alerte Équipe",
+      "webhookId": "37dd46b5-ecca-483c-9794-88d9af1690e5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1kB1RL2XY0ltz3Hq",
+          "name": "thedevs"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 90
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        192,
+        4352
+      ],
+      "id": "945bf870-f3e1-444d-a55e-21e5a834c5ce",
+      "name": "⏳ Wait 48h",
+      "webhookId": "shared-wait-node-48h"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appcFOvy3ENPSDfXQ",
+          "mode": "list",
+          "cachedResultName": "Client alerte",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblstqAAIVqeHosfU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ/tblstqAAIVqeHosfU"
+        },
+        "filterByFormula": "={{ \"{Email}='\" + $('Edit Fields').item.json.Email + \"'\" }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        4320
+      ],
+      "id": "d780d29f-01bd-45cd-8256-c3441df5b9ac",
+      "name": "🔍 Get Statut",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "zRGEmSJpOfcr91ps",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-pending",
+              "leftValue": "={{ $json.Statut.trim() }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -528,
+        4320
+      ],
+      "id": "85a2c885-c97f-4746-a9b1-f5360760e085",
+      "name": "❓ Encore Pending ?"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields').item.json.Email }}",
+        "subject": "👋 Still interested in our  service?",
+        "message": "=<p>Hello <b>{{ $('Edit Fields').item.json['First Name'] }}</b>,</p>\n\n<p>We noticed you recently reached out to us about our <b>{{ $('Edit Fields').item.json.Service }}</b> service and we didn't want you to miss out!</p>\n\n<hr>\n\n<p>💡 We would love to help bring your project to life!<br>\nOur team is ready to find the best solution within your budget of <b>{{ $('Edit Fields').item.json.Budget }}</b>.</p>\n\n<p>👇 Simply reply to this email and we'll get back to you right away.</p>\n\n<hr>\n\n<p>Best regards,<br>\n<b>The Team ⚡</b></p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -896,
+        4320
+      ],
+      "id": "dd597ff7-3ec8-4949-8301-f5866ba66592",
+      "name": "📩 Relance 48h",
+      "webhookId": "e0261d77-f913-4a52-bb9b-da3966585be6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1kB1RL2XY0ltz3Hq",
+          "name": "thedevs"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appcFOvy3ENPSDfXQ",
+          "mode": "list",
+          "cachedResultName": "Client alerte",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblstqAAIVqeHosfU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ/tblstqAAIVqeHosfU"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $('Edit Fields').item.json.Email }}",
+            "Statut": "Contacted",
+            "Notes": "=Relance automatique envoyée le {{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Statut",
+              "displayName": "Statut",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "Contacted",
+                  "value": "Contacted"
+                },
+                {
+                  "name": "In Progress",
+                  "value": "In Progress"
+                },
+                {
+                  "name": "Closed",
+                  "value": "Closed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1280,
+        4208
+      ],
+      "id": "fcd006e3-6584-4678-b265-e8980a79f474",
+      "name": "✅ Update → Contacted",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "zRGEmSJpOfcr91ps",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formId": "ODAjJK"
+      },
+      "type": "n8n-nodes-tallyforms.tallyTrigger",
+      "typeVersion": 2,
+      "position": [
+        -1328,
+        3856
+      ],
+      "id": "3621faa2-5386-44e3-953a-0741365be0b4",
+      "name": "🟢 Tally - Formulaire reçu1",
+      "webhookId": "0899bdfb-225d-4a35-b922-d7600c5be437",
+      "credentials": {
+        "tallyApi": {
+          "id": "jc5HxD6vfzRZvgIb",
+          "name": "Tally account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "First Name",
+              "value": "={{ $json.question_GrQ6Dj.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "Last Name",
+              "value": "={{ $json.question_OAoaYK.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "Email",
+              "value": "={{ $json.question_VZ4GYa.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f4",
+              "name": "Phone",
+              "value": "={{ $json.question_PAGpYQ.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f5",
+              "name": "Budget",
+              "value": "={{ $json.question_EPNKDo.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f6",
+              "name": "Service",
+              "value": "={{ $json.question_jBkPQJ.value }}",
+              "type": "string"
+            },
+            {
+              "id": "f7",
+              "name": "Submission Date",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1088,
+        3856
+      ],
+      "id": "561b95bc-5d02-437f-b4da-bba1217e26d8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields').item.json.Email }}",
+        "subject": "✅ We received your request!",
+        "message": "=<p>Hello {{ $('Edit Fields').item.json['First Name'] }},</p>\n\n<p>Thank you for reaching out to us! We have successfully received your request and our team is already on it.</p>\n\n<hr>\n<h3>📋 YOUR REQUEST SUMMARY</h3>\n<hr>\n\n<p>👤 <b>Name</b> : {{ $('Edit Fields').item.json['First Name'] }} {{ $('Edit Fields').item.json['Last Name'] }}<br>\n🛠️ <b>Service</b> : {{ $('Edit Fields').item.json.Service }}<br>\n💰 <b>Budget</b> : {{ $('Edit Fields').item.json.Budget }}<br>\n📅 <b>Submitted</b> : {{ $('Edit Fields').item.json['Submission Date'].substring(0, 10) }}</p>\n\n<hr>\n\n<p>⏱️ <b>What's next?</b><br>\nOur team will review your request and get back to you within 24-48 hours.</p>\n\n<p>In the meantime, feel free to reply to this email if you have any questions.</p>\n\n<p>Best regards,<br>\n<b>The Team ⚡</b></p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -832,
+        3856
+      ],
+      "id": "872dbd90-02cb-47ea-b739-6fafdbae8c89",
+      "name": "📧 Confirmation au Client1",
+      "webhookId": "be87f863-936a-4616-8962-3aa626ae9d42",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1kB1RL2XY0ltz3Hq",
+          "name": "thedevs"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "budget-check",
+              "leftValue": "={{ $('Edit Fields').item.json.Budget }}",
+              "rightValue": "+2000$",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -592,
+        3856
+      ],
+      "id": "ddbaf730-7cea-49c5-b41f-b4caa8de9499",
+      "name": "💰 Budget +2000$ ?1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "⭐ Set Priority = Prior": {
+      "main": [
+        [
+          {
+            "node": "🗃️ Airtable - Save Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📋 Set Priority = Other": {
+      "main": [
+        [
+          {
+            "node": "🗃️ Airtable - Save Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🗃️ Airtable - Save Client": {
+      "main": [
+        [
+          {
+            "node": "🔔 Alerte Équipe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔔 Alerte Équipe": {
+      "main": [
+        [
+          {
+            "node": "⏳ Wait 48h",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⏳ Wait 48h": {
+      "main": [
+        [
+          {
+            "node": "🔍 Get Statut",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔍 Get Statut": {
+      "main": [
+        [
+          {
+            "node": "❓ Encore Pending ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "❓ Encore Pending ?": {
+      "main": [
+        [
+          {
+            "node": "📩 Relance 48h",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📩 Relance 48h": {
+      "main": [
+        [
+          {
+            "node": "✅ Update → Contacted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🟢 Tally - Formulaire reçu1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "📧 Confirmation au Client1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📧 Confirmation au Client1": {
+      "main": [
+        [
+          {
+            "node": "💰 Budget +2000$ ?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💰 Budget +2000$ ?1": {
+      "main": [
+        [
+          {
+            "node": "⭐ Set Priority = Prior",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "📋 Set Priority = Other",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Africa/Algiers",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "0cc19681-1b4f-49e7-9794-9813423bf0a4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "09b0461e4008da68d768f947ad73b1840893f141dd52a6a34bc3c333d46d84db"
+  },
+  "id": "J7srYigR7QzcbBgf",
+  "tags": []
+}

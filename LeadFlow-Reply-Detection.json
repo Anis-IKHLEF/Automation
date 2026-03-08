@@ -1,0 +1,413 @@
+{
+  "name": "LeadFlow · Reply Detection",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2912,
+        1040
+      ],
+      "id": "e10cfb48-4513-4585-bd8d-8f1ba8b77535",
+      "name": "Gmail - New Reply Received",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1kB1RL2XY0ltz3Hq",
+          "name": "thedevs"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appcFOvy3ENPSDfXQ",
+          "mode": "list",
+          "cachedResultName": "Client alerte",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblstqAAIVqeHosfU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ/tblstqAAIVqeHosfU"
+        },
+        "filterByFormula": "={{\"{Email}='\" + $('Edit Fields').item.json.email + \"'\"}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -2336,
+        1040
+      ],
+      "id": "dcb60369-d9f3-4286-b446-0fd089d1f9d5",
+      "name": "Search Client in Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "zRGEmSJpOfcr91ps",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appcFOvy3ENPSDfXQ",
+          "mode": "list",
+          "cachedResultName": "Client alerte",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblstqAAIVqeHosfU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appcFOvy3ENPSDfXQ/tblstqAAIVqeHosfU"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}",
+            "Statut": "Contacted"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "500$",
+                  "value": "500$"
+                },
+                {
+                  "name": "1000$",
+                  "value": "1000$"
+                },
+                {
+                  "name": "1500$",
+                  "value": "1500$"
+                },
+                {
+                  "name": "+2000$",
+                  "value": "+2000$"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "",
+                  "value": ""
+                },
+                {
+                  "name": "Prior",
+                  "value": "Prior"
+                },
+                {
+                  "name": "Other",
+                  "value": "Other"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Service",
+              "displayName": "Service",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Web developpement",
+                  "value": "Web developpement"
+                },
+                {
+                  "name": "Mobile developpement",
+                  "value": "Mobile developpement"
+                },
+                {
+                  "name": "Data and AI",
+                  "value": "Data and AI"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Submission Date",
+              "displayName": "Submission Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Statut",
+              "displayName": "Statut",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "Contacted",
+                  "value": "Contacted"
+                },
+                {
+                  "name": "In Progress",
+                  "value": "In Progress"
+                },
+                {
+                  "name": "Closed",
+                  "value": "Closed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " checkbox",
+              "displayName": " checkbox",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1728,
+        896
+      ],
+      "id": "b6c08830-9a8a-4bf3-978f-a1339a111a1a",
+      "name": "Update Status → Contacted",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "zRGEmSJpOfcr91ps",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "aniceikhlef10@gmail.com",
+        "subject": "=✅ Client replied! - {{ $json['First Name'] }} {{ $json['Last Name'] }}",
+        "message": "=<h2>🎉 GREAT NEWS!</h2>\n<p>A client just replied to your email!</p>\n\n<hr>\n\n<p>\n👤 <b>Name</b>    : {{ $json['First Name'] }} {{ $json['Last Name'] }}<br>\n📧 <b>Email</b>   : {{ $json.Email }}<br>\n📞 <b>Phone</b>   : {{ $json.Phone }}<br>\n🛠️ <b>Service</b> : {{ $json.Service }}<br>\n💰 <b>Budget</b>  : {{ $json.Budget }}\n</p>\n\n<hr>\n\n<p>✅ <b>Status automatically updated → Contacted</b><br>\n⚠️ The 48h auto follow-up has been cancelled.</p>\n\n<p>⚡ <b>Contact them now!</b></p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -1632,
+        1184
+      ],
+      "id": "db06ead9-71d9-4c7d-a33a-785ca7ddcb47",
+      "name": "Notify Team - Client Replied!",
+      "webhookId": "ff262777-313d-42d9-9e7a-79490ec300a9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1kB1RL2XY0ltz3Hq",
+          "name": "thedevs"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e38fb16-354c-4268-9b91-972a6fc4459d",
+              "name": "email",
+              "value": "={{ $json.From.match(/<(.+)>/)?.[1] ?? $json.From }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2624,
+        1040
+      ],
+      "id": "b1d1fbc0-1189-486e-8bd4-f75c64dcadca",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail - New Reply Received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Client in Airtable": {
+      "main": [
+        [
+          {
+            "node": "Update Status → Contacted",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify Team - Client Replied!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Search Client in Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "20d91d7d-8a1d-4079-8707-0da4e6fa8635",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "09b0461e4008da68d768f947ad73b1840893f141dd52a6a34bc3c333d46d84db"
+  },
+  "id": "pufU6ZSLKLabUZkD",
+  "tags": []
+}
